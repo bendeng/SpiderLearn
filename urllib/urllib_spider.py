@@ -89,6 +89,50 @@ def get_search_result_modify_ua():
         #f.write(data)
 
 
+def load_data_by_proxy_ip():
+    url = "http://www.baidu.com"
+    # handler = urllib.request.HTTPHandler()
+    # opener = urllib.request.build_opener(handler)
+    # response = opener.open(url)
+    # data = response.read().decode()
+    # print(data)
+
+    #添加代理
+    proxy = {
+        #网上找的免费代理IP写法
+        #"http":"180.118.86.26"
+        "http":"http://180.118.86.26"
+    }
+
+    #代理ip池
+    proxies = [
+        proxy,
+        { "http":"http://115.213.243.225" },
+        { "http":"http://183.129.244.16" },
+        { "http":"http://144.255.13.171" }
+    ]
+
+    #代理ip就不用随机了，有可能几次用的是一样的
+    for pro in proxies:
+        # 创建代理handler
+        proxyHandler = urllib.request.ProxyHandler(pro)
+        proxyOpener = urllib.request.build_opener(proxyHandler)
+
+        try:
+            # 使用代理ip发送请求
+            response = proxyOpener.open(url)
+            print(response.headers)
+            data = response.read().decode()
+            #print(data)
+        except Exception as e:
+            print(e)
+
+
+
+
+
+
 #get_search_result('美女')
 #get_search_result_by_mutiple_params()
-get_search_result_modify_ua()
+#get_search_result_modify_ua()
+load_data_by_proxy_ip()
