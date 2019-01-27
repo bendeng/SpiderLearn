@@ -101,7 +101,9 @@ def load_data_by_proxy_ip():
     proxy = {
         #网上找的免费代理IP写法
         #"http":"180.118.86.26"
-        "http":"http://180.118.86.26"
+        #"http":"http://180.118.86.26",
+        #付费的代理ip,第一种写法
+        "http":"username:pwd@180.118.86.26"
     }
 
     #代理ip池
@@ -121,16 +123,47 @@ def load_data_by_proxy_ip():
         try:
             # 使用代理ip发送请求
             response = proxyOpener.open(url)
-            print(response.headers)
+            #print(response.header)
             data = response.read().decode()
             #print(data)
         except Exception as e:
             print(e)
 
 
+def money_proxy_ip():
+    url = ""
+    username = ""
+    password = ""
+    proxyip = ""
+    #使用密码管理器，添加用户名密码。这种方式有个好处就是一个用户名下多个代理ip很方便，不用像第一种方式要拼接
+    password_manager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+    password_manager.add_password(None,proxyip, username,password)
+    #创建验证代理ip的处理器
+    handler_auth_proxy = urllib.request.ProxyBasicAuthHandler()
+    #下面两步就是发送请求
+    opener_auth = urllib.request.build_opener(handler_auth_proxy)
+    opener_auth.open(url)
+
+#访问内网去获取数据
+def auth_nei_wang():
+    #1.用户名密码
+    user = "admin"
+    pwd = "adimin123"
+    nei_url = "http://192.168.0.66"
 
 
+    #2.创建密码管理器
+    pwd_manager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
 
+    pwd_manager.add_password(None,nei_url,user,pwd)
+
+    #创建认证处理器(requests)
+    auth_handler = urllib.request.HTTPBasicAuthHandler(pwd_manager)
+
+    opener = urllib.request.build_opener(auth_handler)
+
+    response = opener.open(nei_url)
+    print(response)
 
 #get_search_result('美女')
 #get_search_result_by_mutiple_params()
