@@ -3,7 +3,7 @@ import re
 def lazy():
     str = 'abcbcbcb'
     pattern = re.compile('a.*b')  # 结果是['abcbcbcb']
-    # pattern = re.compile('a.*?b')#结果是['ab']
+    # pattern = parse.compile('a.*?b')#结果是['ab']
     result = pattern.findall(str)
     print(result)
 
@@ -17,8 +17,9 @@ def dot():
         1234567778888N
     """
 
-    #pattern = re.compile('m(.*)n')  #结果是['sfdsdffdsdfs']
+    #pattern = parse.compile('m(.*)n')  #结果是['sfdsdffdsdfs']
     pattern = re.compile('m(.*)n', re.S | re.I)  #结果是['sfdsdffdsdfsn\n        1234567778888']
+    #parse.S可以弥补.*的不能匹配换行符的缺憾
     result = pattern.findall(one)
     print(result)
 
@@ -56,7 +57,7 @@ def summary():
     #result = patter.sub('#', one)
 
     # split  拆分
-    #patter = re.compile(' ')
+    #patter = parse.compile(' ')
     #result = patter.split(one)
 
     print(result)
