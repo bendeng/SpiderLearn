@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from bs4 import BeautifulSoup
 
 #官方文档：https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/
@@ -15,6 +16,13 @@ and they lived at the bottom of a well.</p>
 
 <p class="story">...</p>
 """
+
+soup = BeautifulSoup(html_doc, 'lxml')
+#bs4通过这样取标签，都是取的第一个标签
+print(soup.p.text)   #The Dormouse's story
+print(soup.a.text)   #Elsie
+print(soup.title.text)  #The Dormouse's story
+
 
 
 
