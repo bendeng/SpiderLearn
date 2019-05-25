@@ -1,6 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 
+from DB import DB,DbType
+
+
 
 class WeiboSpider:
 
@@ -14,7 +17,7 @@ class WeiboSpider:
     def start(self):
         print('开始抓取微博内容')
         option = webdriver.ChromeOptions()
-        # option.add_argument('headless')
+        option.add_argument('headless')
 
         driver = webdriver.Chrome(
             executable_path='./chromedriver',
@@ -30,8 +33,18 @@ class WeiboSpider:
             lambda e: e.find_elements_by_xpath('//div[@class="WB_text W_f14"]'))
 
         if len(wb_content) > 0:
+            data = []
             for wb_item in wb_content:
-                print(wb_item.text)
+                #print(wb_item.text)
+                data.append({'content':wb_item.text})
+
+            self.save(data)
+
+    def save(self, data):
+        db = DB()
+        db.save(DbType.MONGO, data)
+
+
 
 
 if __name__ == '__main__':
